@@ -5,32 +5,34 @@ import static com.google.common.base.Preconditions.checkArgument;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import edu.sjsu.cmpe.library.domain.Book;
+import edu.sjsu.cmpe.library.domain.Review;
+import edu.sjsu.cmpe.library.dto.LinksDto;
 
 @JsonPropertyOrder(alphabetic = true)
 public class ReviewDto extends LinksDto {
-    private Book book;
+    private Review review;
 
     /**
      * @param book
      */
-    public  ReviewDto(Book book) {
+    public  ReviewDto(Review review) {
 	super();
-	this.book = book;
+	this.review = review;
     }
 
-    /**
-     * @return the book
-     */
-    public Book getReview() {
-    	
-	return book;
-    }
+	/**
+	 * @return the review
+	 */
+	public Review getReview() {
+		return review;
+	}
 
-    /**
-     * @param book
-     *            the book to set
-     */
-    public void setReview(Book book) {
-	this.book = book;
-    }
+	/**
+	 * @param review the review to set
+	 */
+	public void setReview(Review review) {
+		this.review = review;
+	}
+
+   
 }

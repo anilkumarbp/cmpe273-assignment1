@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe.library.domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,12 +15,10 @@ public class Book {
     private int pages;
     private String status="avilable";
     List<Author> authlist; 
-    List<Review> reviewlist;
+    List<Review> reviewlist= new ArrayList<Review>() ;
     
 
-    // add more fields here
-
-    /**
+     /**
      * @return the isbn
      */
     public long getIsbn() {

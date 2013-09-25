@@ -6,6 +6,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
@@ -23,6 +24,7 @@ public class BookRepository implements BookRepositoryInterface {
 
     /** Never access this key directly; instead use generateISBNKey() */
     private static int authorId;
+    private static int count;
     private static int reviewId;
     private long isbnKey;
     
@@ -50,29 +52,21 @@ public class BookRepository implements BookRepositoryInterface {
     public Book saveBook(Book newBook) {
 	checkNotNull(newBook, "newBook instance must not be null");
 	List<Author> newauthor = newBook.getAuthlist();
-	List<Review> newreview = newBook.getReviewlist();
+	
 	// Generate new ISBN
 	Long isbn = generateISBNKey();
 	newBook.setIsbn(isbn);
-	
-	
-	
-	// TODO: create and associate other fields such as author
-    for (int i=0;i<newauthor.size();i++)
+
+	for (int i=0;i<newauthor.size();i++)
     {
     	Author tempauthor = newauthor.get(i);
     	tempauthor.setId(genauthorId());
     }
     
-    //for (int j=0;j<newauthor.size();j++)
-    //{
-    	//Review tempreview = newreview.get(j);
-    	//tempreview.setID(genreviewId());
-    //}
-	// Finally, save the new book into the map
-	bookInMemoryMap.putIfAbsent(isbn, newBook);
+   	bookInMemoryMap.putIfAbsent(isbn, newBook);
 
 	return newBook;
+	
     }
 
     /**
@@ -115,24 +109,65 @@ public class BookRepository implements BookRepositoryInterface {
     }
     	
     private final int genauthorId(){
-    	return ++authorId;
+    	return ++authorId;}
     	
-    }
-    private final int genreviewId(){
-    	return ++reviewId;
+    	private final int genreviewId(){
+        	return ++reviewId;	
     }
     
-    public Review savereview(Review newreview) {
-    	checkNotNull(newreview, "newreview instance must not be null");
-    	private final BookRepositoryInterface bookRepository;
-    	Book newbook = newbook.
-    	newbook.add
-    	
-	
-	
-	
+    
+    public Book saveReview(Book newBook) {
+	checkNotNull(newBook, "newBook instance must not be null");
+	List<Review> newreview = newBook.getReviewlist();
+
+	Long isbn = generateISBNKey();
+	newBook.setIsbn(isbn);
+
+    for (int i=0;i<newreview.size();i++)
+    {
+    	Review tempreview = newreview.get(i);
+    	tempreview.setID(genreviewId());
     }
+    
+    
+	bookInMemoryMap.putIfAbsent(isbn, newBook);
+
+	return newBook;
+    }
+
+	
+public Review getRevByISBNID(Long isbn,int ID) {
+    	
+	Book book = bookInMemoryMap.get(isbn);
+	List<Review> newreview = book.getReviewlist();
+	
+	for(int i=0;i<newreview.size();i++)
+	{
+		if(newreview.get(i).getID()==ID)
+		{
+			return newreview.get(i);
+		}
+	}
+	return null;
 }
 
+public Author getAuthByISBNID(Long isbn,int id) {
+	
+	Book book = bookInMemoryMap.get(isbn);
+	List<Author> newauthor = book.getAuthlist();
+	
+	for(int i=0;i<newauthor.size();i++)
+	{
+		if(newauthor.get(i).getId()==id)
+			
+			return newauthor.get(i);
+	}
+	return null;
+
+}
+
+}
+		
+    
     
 

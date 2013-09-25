@@ -18,7 +18,7 @@ import edu.sjsu.cmpe.library.dto.LinksDto;
 public class RootResource {
 
     public RootResource() {
-	// do nothing
+	
     }
 
     @GET
